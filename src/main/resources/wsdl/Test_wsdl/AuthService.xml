@@ -1,0 +1,204 @@
+<wsdl:definitions name="AuthService" targetNamespace="http://ICRA.SOAP.DataProdiver/Authentication" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tns="http://ICRA.SOAP.DataProdiver/Authentication" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+   <wsdl:types>
+      <xs:schema elementFormDefault="qualified" targetNamespace="http://ICRA.SOAP.DataProdiver/DataContracts/" xmlns:tns="http://ICRA.SOAP.DataProdiver/DataContracts/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+         <xs:complexType name="AuthToken">
+            <xs:sequence>
+               <xs:element minOccurs="0" name="Information" nillable="true" type="xs:string"/>
+               <xs:element minOccurs="0" name="IsSucess" type="xs:boolean"/>
+               <xs:element minOccurs="0" name="SecurityKey" nillable="true" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:element name="AuthToken" nillable="true" type="tns:AuthToken"/>
+      </xs:schema>
+      <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+         <xs:element name="anyType" nillable="true" type="xs:anyType"/>
+         <xs:element name="anyURI" nillable="true" type="xs:anyURI"/>
+         <xs:element name="base64Binary" nillable="true" type="xs:base64Binary"/>
+         <xs:element name="boolean" nillable="true" type="xs:boolean"/>
+         <xs:element name="byte" nillable="true" type="xs:byte"/>
+         <xs:element name="dateTime" nillable="true" type="xs:dateTime"/>
+         <xs:element name="decimal" nillable="true" type="xs:decimal"/>
+         <xs:element name="double" nillable="true" type="xs:double"/>
+         <xs:element name="float" nillable="true" type="xs:float"/>
+         <xs:element name="int" nillable="true" type="xs:int"/>
+         <xs:element name="long" nillable="true" type="xs:long"/>
+         <xs:element name="QName" nillable="true" type="xs:QName"/>
+         <xs:element name="short" nillable="true" type="xs:short"/>
+         <xs:element name="string" nillable="true" type="xs:string"/>
+         <xs:element name="unsignedByte" nillable="true" type="xs:unsignedByte"/>
+         <xs:element name="unsignedInt" nillable="true" type="xs:unsignedInt"/>
+         <xs:element name="unsignedLong" nillable="true" type="xs:unsignedLong"/>
+         <xs:element name="unsignedShort" nillable="true" type="xs:unsignedShort"/>
+         <xs:element name="char" nillable="true" type="tns:char"/>
+         <xs:simpleType name="char">
+            <xs:restriction base="xs:int"/>
+         </xs:simpleType>
+         <xs:element name="duration" nillable="true" type="tns:duration"/>
+         <xs:simpleType name="duration">
+            <xs:restriction base="xs:duration">
+               <xs:pattern value="/-?P(/d*D)?(T(/d*H)?(/d*M)?(/d*(/./d*)?S)?)?"/>
+               <xs:minInclusive value="-P10675199DT2H48M5.4775808S"/>
+               <xs:maxInclusive value="P10675199DT2H48M5.4775807S"/>
+            </xs:restriction>
+         </xs:simpleType>
+         <xs:element name="guid" nillable="true" type="tns:guid"/>
+         <xs:simpleType name="guid">
+            <xs:restriction base="xs:string">
+               <xs:pattern value="[/da-fA-F]{8}-[/da-fA-F]{4}-[/da-fA-F]{4}-[/da-fA-F]{4}-[/da-fA-F]{12}"/>
+            </xs:restriction>
+         </xs:simpleType>
+         <xs:attribute name="FactoryType" type="xs:QName"/>
+         <xs:attribute name="Id" type="xs:ID"/>
+         <xs:attribute name="Ref" type="xs:IDREF"/>
+      </xs:schema>
+      <xs:schema elementFormDefault="qualified" targetNamespace="http://ICRA.SOAP.DataProdiver/Authentication" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+         <xs:import namespace="http://ICRA.SOAP.DataProdiver/DataContracts/"/>
+         <xs:element name="LogIn">
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string"/>
+                  <xs:element minOccurs="0" name="Password" nillable="true" type="xs:base64Binary"/>
+               </xs:sequence>
+            </xs:complexType>
+         </xs:element>
+         <xs:element name="LogInResponse">
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element minOccurs="0" name="LogInResult" nillable="true" type="q1:AuthToken" xmlns:q1="http://ICRA.SOAP.DataProdiver/DataContracts/"/>
+               </xs:sequence>
+            </xs:complexType>
+         </xs:element>
+         <xs:element name="ChangePassword">
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element minOccurs="0" name="AuthToken" nillable="true" type="q2:AuthToken" xmlns:q2="http://ICRA.SOAP.DataProdiver/DataContracts/"/>
+                  <xs:element minOccurs="0" name="OldPassword" nillable="true" type="xs:base64Binary"/>
+                  <xs:element minOccurs="0" name="NewPassword" nillable="true" type="xs:base64Binary"/>
+               </xs:sequence>
+            </xs:complexType>
+         </xs:element>
+         <xs:element name="ChangePasswordResponse">
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element minOccurs="0" name="ChangePasswordResult" nillable="true" type="q3:AuthToken" xmlns:q3="http://ICRA.SOAP.DataProdiver/DataContracts/"/>
+               </xs:sequence>
+            </xs:complexType>
+         </xs:element>
+         <xs:element name="LogOut">
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element minOccurs="0" name="AuthToken" nillable="true" type="q4:AuthToken" xmlns:q4="http://ICRA.SOAP.DataProdiver/DataContracts/"/>
+               </xs:sequence>
+            </xs:complexType>
+         </xs:element>
+         <xs:element name="LogOutResponse">
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element minOccurs="0" name="LogOutResult" nillable="true" type="q5:AuthToken" xmlns:q5="http://ICRA.SOAP.DataProdiver/DataContracts/"/>
+               </xs:sequence>
+            </xs:complexType>
+         </xs:element>
+         <xs:element name="LogOutForcefully">
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string"/>
+                  <xs:element minOccurs="0" name="Password" nillable="true" type="xs:base64Binary"/>
+               </xs:sequence>
+            </xs:complexType>
+         </xs:element>
+         <xs:element name="LogOutForcefullyResponse">
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element minOccurs="0" name="LogOutForcefullyResult" type="xs:boolean"/>
+               </xs:sequence>
+            </xs:complexType>
+         </xs:element>
+      </xs:schema>
+   </wsdl:types>
+   <wsdl:message name="IAuthenticationService_LogIn_InputMessage">
+      <wsdl:part name="parameters" element="tns:LogIn"/>
+   </wsdl:message>
+   <wsdl:message name="IAuthenticationService_LogIn_OutputMessage">
+      <wsdl:part name="parameters" element="tns:LogInResponse"/>
+   </wsdl:message>
+   <wsdl:message name="IAuthenticationService_ChangePassword_InputMessage">
+      <wsdl:part name="parameters" element="tns:ChangePassword"/>
+   </wsdl:message>
+   <wsdl:message name="IAuthenticationService_ChangePassword_OutputMessage">
+      <wsdl:part name="parameters" element="tns:ChangePasswordResponse"/>
+   </wsdl:message>
+   <wsdl:message name="IAuthenticationService_LogOut_InputMessage">
+      <wsdl:part name="parameters" element="tns:LogOut"/>
+   </wsdl:message>
+   <wsdl:message name="IAuthenticationService_LogOut_OutputMessage">
+      <wsdl:part name="parameters" element="tns:LogOutResponse"/>
+   </wsdl:message>
+   <wsdl:message name="IAuthenticationService_LogOutForcefully_InputMessage">
+      <wsdl:part name="parameters" element="tns:LogOutForcefully"/>
+   </wsdl:message>
+   <wsdl:message name="IAuthenticationService_LogOutForcefully_OutputMessage">
+      <wsdl:part name="parameters" element="tns:LogOutForcefullyResponse"/>
+   </wsdl:message>
+   <wsdl:portType name="IAuthenticationService">
+      <wsdl:operation name="LogIn">
+         <wsdl:input wsaw:Action="http://ICRA.SOAP.DataProdiver/Authentication\SingInToService" message="tns:IAuthenticationService_LogIn_InputMessage"/>
+         <wsdl:output wsaw:Action="http://ICRA.SOAP.DataProdiver/Response/Authentication\SingInToService" message="tns:IAuthenticationService_LogIn_OutputMessage"/>
+      </wsdl:operation>
+      <wsdl:operation name="ChangePassword">
+         <wsdl:input wsaw:Action="http://ICRA.SOAP.DataProdiver/Authentication/ChangePassword" message="tns:IAuthenticationService_ChangePassword_InputMessage"/>
+         <wsdl:output wsaw:Action="http://ICRA.SOAP.DataProdiver/Response/Authentication/ChangePassword" message="tns:IAuthenticationService_ChangePassword_OutputMessage"/>
+      </wsdl:operation>
+      <wsdl:operation name="LogOut">
+         <wsdl:input wsaw:Action="http://ICRA.SOAP.DataProdiver/Authentication/LogOut" message="tns:IAuthenticationService_LogOut_InputMessage"/>
+         <wsdl:output wsaw:Action="http://ICRA.SOAP.DataProdiver/Response/Authentication/LogOut" message="tns:IAuthenticationService_LogOut_OutputMessage"/>
+      </wsdl:operation>
+      <wsdl:operation name="LogOutForcefully">
+         <wsdl:input wsaw:Action="http://ICRA.SOAP.DataProdiver/Authentication/ForceFullyLogOut" message="tns:IAuthenticationService_LogOutForcefully_InputMessage"/>
+         <wsdl:output wsaw:Action="http://ICRA.SOAP.DataProdiver/Response/Authentication/ForceFullyLogOut" message="tns:IAuthenticationService_LogOutForcefully_OutputMessage"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <wsdl:binding name="BasicHttpBinding_IAuthenticationService" type="tns:IAuthenticationService">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="LogIn">
+         <soap:operation soapAction="http://ICRA.SOAP.DataProdiver/Authentication\SingInToService" style="document"/>
+         <wsdl:input>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ChangePassword">
+         <soap:operation soapAction="http://ICRA.SOAP.DataProdiver/Authentication/ChangePassword" style="document"/>
+         <wsdl:input>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="LogOut">
+         <soap:operation soapAction="http://ICRA.SOAP.DataProdiver/Authentication/LogOut" style="document"/>
+         <wsdl:input>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="LogOutForcefully">
+         <soap:operation soapAction="http://ICRA.SOAP.DataProdiver/Authentication/ForceFullyLogOut" style="document"/>
+         <wsdl:input>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+   </wsdl:binding>
+   <wsdl:service name="AuthService">
+      <wsdl:port name="BasicHttpBinding_IAuthenticationService" binding="tns:BasicHttpBinding_IAuthenticationService">
+         <soap:address location="http://uatdataservice.icraonline.com/SOAP/Auth/ICRA.Authentication.svc"/>
+      </wsdl:port>
+   </wsdl:service>
+</wsdl:definitions>
